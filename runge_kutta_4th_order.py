@@ -5,14 +5,12 @@ Created on Wed Mar 28 17:52:54 2018
 """
 
 # WORKING RK4 Algorithm
+# The Runge-Kutta algo. is basically a computational method to find the approximate solution to ordinary differential equations.
 
 import math
 import matplotlib.pyplot as plt
 import pandas as pd
 # function - f(t,y)
-
-
-
 
 
 y0 = 1 #initial conditions
@@ -23,9 +21,9 @@ h = (t_max - t_start)/N #step size
 w = 7
 
 def F(t,y):
-    # function F(y,t) = dy/dt
-    #answer = (5*(t**2) - y)/(math.exp(t+y))
-    #answer = - (w**2) * y * math.sin(2*t - 100)
+    # function given in the form of an OrdinaryDiffEqn. : F(y,t) = dy/dt
+    #answer1 = (5*(t**2) - y)/(math.exp(t+y))
+    #answer2 = - (w**2) * y * math.sin(2*t - 100)
     answer = (t + y) * math.sin(t*y)
     
     return answer
@@ -50,7 +48,7 @@ for i in range(0,N):
     df111.loc[-1] = [y0, t_current]  # adding a row
     df111.index = df111.index + 1  # shifting index
     df111 = df111.sort_index()
-# OK iimplemented 1 round of RK. Now need to keep looping over this multiple times.
+# OK implemented 1 round of RK. Now need to keep looping over this multiple times.
     
 df111 = df111[::-1]
 df111[['y']].plot()
