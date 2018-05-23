@@ -52,3 +52,53 @@ for i in range(0,N):
     
 df111 = df111[::-1]
 df111[['y']].plot()
+
+
+# ---------------------------------------------+
+# ----- Another implementation  of RK4 --------+
+# ---------------------------------------------+
+
+# Reference: https://www.geeksforgeeks.org/runge-kutta-4th-order-method-solve-differential-equation/
+
+def dy_dx(x,y):
+    return ((x**2 + y)/3)
+
+
+def runge_kutta_4th(x0, y0, x, step_size):
+    """
+    
+    starting coords = x0, y0
+    If you input an x-coordinate, the function will return y.
+    But only works for 1 point at a time, so have to loop over multiple values of x.
+    """
+    h = step_size
+    
+    n_preliminary = (x - x0)/h
+    N = int(n_preliminary)
+    
+    y = y0
+    
+    
+    for i in range(1, int(n_preliminary)):
+        
+        k1 = h * dy_dx(x0, y)
+        k2 = h * dy_dx(x0 + h/2, y + k1/2)
+        k3 = h * dy_dx(x0 + h/2, y + k2/2)
+        k4 = h * dy_dx(x0 + h, y + k3)
+        
+        y = y + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4)
+        
+        x0 = x0 + h
+        
+    return y
+
+print(runge_kutta_4th(0, 12, 2, 0.1))
+    
+
+for i in range(0, 100):
+    x_plot = i/10
+    y_plot = runge_kutta_4th(0, 12, x_plot, 0.1)
+    
+    plt.scatter(x_plot, y_plot)
+    
+plt.show()
